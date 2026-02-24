@@ -1,0 +1,18 @@
+{
+    "email":{
+        "user":"towitness@163.com",
+        "pass":"SFewMBDetgM4YmPt"
+    },
+
+    "mysql":{
+        "host":"0.0.0.0",
+        "port":3306,
+        "passw":123456
+    },
+
+    "redis":{
+        "host":"0.0.0.0",
+        "port":6380,
+        "passwd":123456
+    }
+}
