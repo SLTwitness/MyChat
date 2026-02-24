@@ -1,8 +1,19 @@
 > server和email_serve均学习于 [https://gitee.com/secondtonone1/llfcchat  ](https://gitbookcpp.llfc.club/sections/cpp/project/day01.html)  
 > 环境配置有所更新，基本全使用当时最新的稳定版本（2025.12）  
-> 部分代码稍加修改，如超时检测，邮件等
+> 部分代码稍加修改，如超时检测，邮件等  
 
-### server  
+&emsp;  
+***目前进度：验证码服务Demo***  
+&emsp;  
+
+- [项目内容](#项目内容)
+- [本地部署](#本地部署)
+- [预览图](#预览图)
+
+---
+
+### 项目内容
+#### server  
 - c++服务器
 - 技术栈：
   - Boost.Asio网络库
@@ -17,7 +28,7 @@
 - MVC架构
   - C：路由分发
 
-### email_serve
+#### email_serve
 - 验证码服务
 - 技术栈：
   - gRPC微服务
@@ -28,7 +39,7 @@
 - MVC架构
   - M
 
-### client
+#### client
 - Qt客户端
 - 技术栈：
   - cmake
@@ -42,7 +53,9 @@
 - MVC架构：
   - V
 
-### 本地部署
+--- 
+
+#### 本地部署
 - 环境要求
   - Visual Studio 2022
   - boost_1_89_0
@@ -58,6 +71,8 @@
   1. 编译server
   2. 在email_serve文件夹根目录命令行执行`npm run serve`
   3. qt creator编译client 
+
+--- 
  
-### 预览图
+#### 预览图
 ![preview](https://github.com/user-attachments/assets/dd79d1f7-9af1-4398-8361-9804a3b2074a)
