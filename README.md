@@ -3,7 +3,7 @@
 > 部分代码稍加修改，如超时检测，邮件等  
 
 &emsp;  
-***目前进度：验证码服务Demo***  
+***目前进度：已完成基础的消息收发功能***  
 ***代码已尽量规范，部分注释，客户端图标ps扣的，有帮助可以留个star哦🥰***
 &emsp;  
 
@@ -71,7 +71,14 @@
   - 应该只有server不能够直接编译，需要将我配置的路径全都改掉
   1. 编译server
   2. 在email_serve文件夹根目录命令行执行`npm run serve`
-  3. qt creator编译client 
+  3. qt creator编译client
+  - 注册：
+    - 需编译verifyserver和gateserver，并在verifyserver根目录下命令行执行`npm run serve`
+  - 登录：
+    - 需编译所有server，并提前启动本地redis服务器（因为config.ini中填的是本机地址）
+
+- tips：
+  - 注册功能我的163邮箱经常被警告，很可能发不出来
 
 --- 
  
