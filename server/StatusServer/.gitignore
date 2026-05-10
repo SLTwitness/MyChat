@@ -1,0 +1,7 @@
+.vs/
+*.vcxproj.user
+
+x64/
+StatusServer/
+
+*.dll

@@ -3,13 +3,29 @@ const message_proto=require('./proto');
 const const_module=require('./const');
 const { v4:uudiv4 }=require('uuid');
 const emailModule=require('./email');
+const redisModule=require('./redis');
 
 async function GetVerifyCode(call,callback) {       //await必须在async异步函数中使用
     console.log('email is ',call.request.email);
     try{
-        uniqueId=uudiv4();
+        let res=await redisModule.getRedis(const_module.code_prefix+call.request.email);
+        console.log("res is ",res);
+        let uniqueId=res;
+        if(res==null){
+            uniqueId=uudiv4();
+            if(uniqueId.length>6){
+                uniqueId=uniqueId.substring(0,6);
+            }
+            let bres=await redisModule.setExpire(const_module.code_prefix+call.request.email,uniqueId,600);
+            if(!bres){
+                callback(null,{
+                    email:call.request.email,
+                    error:const_module.Errors.RedisErr
+                });
+                return;
+            }
+        }
         console.log('unqiueId is ',uniqueId);
-        let verifyId=uniqueId.substring(0,6);           //截取前6位验证码
 
         let mailOptions_={
             from:'towitness@163.com',
@@ -26,7 +42,7 @@ async function GetVerifyCode(call,callback) {       //await必须在async异步�
                         
                         <inline-block style="color: #07C160;font-size: 40px;font-weight: 500;text-align: center;background-color: #EAEAEA;
                             padding-top: 17px;padding-bottom: 17px;padding-left: 70px;padding-right: 70px;border-radius: 4px;">
-                            ${verifyId}
+                            ${uniqueId}
                         </inline-block>
 
                         <div style="background-color: white;height: 40px;"></div>
@@ -42,25 +58,38 @@ async function GetVerifyCode(call,callback) {       //await必须在async异步�
             `
         };
 
-        let send_res=await emailModule.SendMail(mailOptions_);  //await等待promise完成（阻塞）
+        let send_res=await emailModule.SendMail(mailOptions_);  //await等待promise完成（非阻塞）
         console.log("send res is ",send_res);
 
-        /*测试用：返回code*/
-        callback(null,{ email:call.request.email , error:const_module.Errors.Success , code:verifyId});
-        /*测试用：返回code*/
+        //发送失败
+        if(!send_res){
+            callback(null,{
+                email:call.request.email,
+                error:const_module.Errors.RedisErr
+            })
+            return;
+        }
+
+        callback(null,{ 
+            email:call.request.email,
+            error:const_module.Errors.Success
+        });
     }
     catch(error){
         console.log('catch error is ',error);
 
-        callback(null,{ email:call.request.email , error:const_module.Errors.Exception });
+        callback(null,{ 
+            email:call.request.email,
+            error:const_module.Errors.Exception 
+        });
     }
 }
 
 function main(){
     var server=new grpc.Server();
-    server.addService(message_proto.VerifyService.service,{ GetVerifyCode:GetVerifyCode });
+    server.addService(message_proto.VerifyService.service,{ GetVerifyCode:GetVerifyCode });     //绑定函数
     server.bindAsync('0.0.0.0:50051',grpc.ServerCredentials.createInsecure(),()=>{
-        console.log('grpc server started');
+        console.log('grpc server started');             //绑定监听端口
     })
 }
 
