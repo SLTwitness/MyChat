@@ -18,28 +18,28 @@
 - c++服务器
 - 技术栈：
   - Boost.Asio网络库
-    - GateServer: 基于异步accept实现高并发连接接入
+    - GateServer：基于异步`accept`实现高并发连接接入
     - ChatServer / ChatServer2: 实现异步收发与IO线程池封装
   - Boost.Beast
-    - 处理HTTP的GET/POST请求
+    - 处理`HTTP`的`GET/POST`请求
   - gRPC+Protobuf
-    - GateServer: 调用验证码服务，并向状态服务获取ChatServer地址和token
-    - ChatServer / ChatServer2: 实现好友申请、好友验证、聊天消息等跨服通知RPC
-    - StatusServer: 登录调度与ChatServer分配
+    - GateServer：调用验证码服务，并向状态服务获取`ChatServer`地址和`token`
+    - ChatServer / ChatServer2：实现好友申请、好友验证、聊天消息等跨服通知RPC
+    - StatusServer：登录调度与`ChatServer`分配
   - JsonCPP
-    - 解析与构造JSON数据
+    - 解析与构造`JSON`数据
   - Redis
-    - GateServer: 验证码缓存、各种key
-    - ChatServer: 登录计数、会话相关等
+    - GateServer：验证码缓存、各种key
+    - ChatServer：登录计数、会话相关等
   - MySQL
     - 存储用户信息、用户好友、好友请求、聊天业务等数据
 - 设计模式：
   - 单例模式
-    - 封装通用单例模板，实现RedisMgr、LogicSystem等核心模块全局管理
+    - 封装通用单例模板，实现`RedisMgr`、`LogicSystem`等核心模块全局管理
 - 架构设计：
-  - 连接池：封装 gRPC Stub 连接池，复用连接，减轻频繁建连开销，提高调用性能
-  - 多线程：主线程跑网络事件轮询，独立线程处理gRPC通信，IO线程池负责异步消息收发
-  - 分布式架构：通过GateServer、StatusServer、复数ChatServer，实现服务拆分与横向扩展
+  - 连接池：封装`gRPC Stub`连接池，复用连接，减轻频繁建连开销，提高调用性能
+  - 多线程：主线程跑网络事件轮询，独立线程处理`gRPC`通信，IO线程池负责异步消息收发
+  - 分布式架构：通过`GateServer`、`StatusServer`、复数`ChatServer`，实现服务拆分与横向扩展
 
 #### email_serve
 - 验证码服务
@@ -51,8 +51,8 @@
   - html
     - 邮件模板
 - 架构设计
-  - 异步I/O：async/await + Promise 封装邮件发送流程，提高并发处理能力
-  - 缓存防刷：发送验证码前先查Redis，已存在则返回，无则生成，避免重复发信
+  - 异步I/O：`async/await + Promise`封装邮件发送流程，提高并发处理能力
+  - 缓存防刷：发送验证码前先查`Redis`，已存在则返回，无则生成，避免重复发信
 
 #### client
 - Qt客户端
@@ -63,13 +63,13 @@
   - 网络模块
 - 设计模式：
   - 单例模式
-    - 注册全局单例AppState、TcpMgr等，统一管理状态与网络模块
+    - 注册全局单例`AppState`、`TcpMgr`等，统一管理状态与网络模块
   - 观察者模式
     - 基于信号与槽实现：网络消息通知、页面联动响应等，实现模块解耦
   - 外观模式
-    - QML统一通过调用Q_INVOKABLE接口调用功能模块，降低UI与底层实现耦合
+    - QML统一通过调用`Q_INVOKABLE`接口调用功能模块，降低UI与底层实现耦合
   - 中介者模式
-    - TcprMgr作为网络消息中介，接收网络数据，并分发业务消息通知UserMgr与QML，避免模块间直接依赖
+    - TcprMgr作为网络消息中介，接收网络数据，并分发业务消息通知`UserMgr`与`QML`，避免模块间直接依赖
 - 架构设计
   - MVC架构：
     - M: 后端业务数据
@@ -92,10 +92,10 @@
 - 部署编译
   - 需修改路径等配置信息
   1. 编译server
-  2. 在email_serve文件夹根目录命令行执行`npm run serve`
+  2. 在`VerifyServer`文件夹根目录命令行执行`npm run serve`
   3. qt creator编译client
   - 注册：
-    - 需编译verifyserver和gateserver，并在verifyserver根目录下命令行执行`npm run serve`
+    - 需编译`VerifyServer`和`GateServer`，并在`VerifyServer`根目录下命令行执行`npm run serve`
   - 登录：
     - 需编译所有server，并提前启动本地redis服务器（因为config.ini中填的是本机地址）
 
