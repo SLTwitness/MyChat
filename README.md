@@ -1,4 +1,4 @@
-> server和email_serve均学习于 [https://gitee.com/secondtonone1/llfcchat  ](https://gitbookcpp.llfc.club/sections/cpp/project/day01.html)  
+> server和email_server均学习于 [https://gitee.com/secondtonone1/llfcchat  ](https://gitbookcpp.llfc.club/sections/cpp/project/day01.html)  
 > 环境配置有所更新，基本全使用当时最新的稳定版本（2025.12）  
 > 部分代码稍加修改，如超时检测，邮件等  
 
