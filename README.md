@@ -112,7 +112,7 @@
 ![preview](https://github.com/user-attachments/assets/dd79d1f7-9af1-4398-8361-9804a3b2074a)  
 （由于与demo改动不大，故不修改预览图了）
 
-- 登入功能  
+- 登入功能（添加好友、认证通过）  
 <img width="600" height="338" alt="添加好友 (1)" src="https://github.com/user-attachments/assets/62c3db72-ea9a-4053-be36-05000ecdfde9" />
 
 - 聊天功能  
